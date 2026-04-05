@@ -6,7 +6,7 @@ Quickly access passwords, TOTPs, notes, and more using the local backup of your 
 
 ## Documentation
 
-Please check the project's [wiki](https://github.com/diogoftm/protonpe.wiki.git).
+Please check the project's [wiki](https://github.com/diogoftm/protonpe/wiki).
 
 ## Quick start
 

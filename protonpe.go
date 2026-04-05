@@ -16,7 +16,7 @@ func main() {
 	cmd := &cli.Command{
 		Name:    "protonpe",
 		Usage:   "read secrets from Proton Pass exports",
-		Version: "v0.1.0-beta",
+		Version: "v0.1.0",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "file",
@@ -24,6 +24,7 @@ func main() {
 				Usage:   "path to Proton Pass export",
 			},
 		},
+		HideHelpCommand: true,
 		Commands: []*cli.Command{
 			{
 				Name:         "info",
