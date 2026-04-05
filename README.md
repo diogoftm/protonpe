@@ -12,12 +12,12 @@ Please check the project's [wiki](https://github.com/diogoftm/protonpe.wiki.git)
 
 Start by installing the tool from the repository as follows:
 ```bash
-go install github.com/diogoftm/protonpe/
+go install github.com/diogoftm/protonpe@latest
 ```
 
 The `protonpe` command must then be available. If not, on Linux, make sure `$GOPATH/bin` is part of the user's `$PATH`.
 
-For example, to general information about the available vaults on file named `data.pgp`, simply run:
+For example, to retrieve general information about the available vaults on a file named `data.pgp`, simply run:
 ```bash
 protonpe info -f data.pgp
 ```
@@ -26,4 +26,4 @@ To simplify the usage of the tool, the `PROTONPE_FILE` environment variable can 
 
 ---
 
-This software is under a MIT [license](license.txt). This project it is not supported nor connected to Proton AG. Nonetheless, please always prefer European technology made proudly by European companies!
+> This software is distributed under the MIT [license](license.txt). It is an independent project and is not affiliated with, endorsed by, or supported by Proton AG. Nonetheless, please always prefer European technology made proudly by European companies!
