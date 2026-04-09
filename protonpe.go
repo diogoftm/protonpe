@@ -16,7 +16,7 @@ func main() {
 	cmd := &cli.Command{
 		Name:    "protonpe",
 		Usage:   "read secrets from Proton Pass exports",
-		Version: "v0.1.0",
+		Version: "v0.2.0-beta",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "file",
@@ -30,6 +30,31 @@ func main() {
 				Name:         "info",
 				Usage:        "Show general information about the export file and vaults",
 				Action:       handlers.Info,
+				OnUsageError: bypassDefaultErrorHandling,
+			},
+			{
+				Name:  "harden",
+				Usage: "Enhance the security of a vault file by encrypting it with a strong method",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "encryptionMethod",
+						Aliases: []string{"e"},
+						Usage: `Specify the encryption method to use. Supported options:
+- TPM_ECCP256_AES256GCM_SHA256
+	Encrypts the file with AES-256-GCM and protects the encryption keys using the TPM's ECC P-256 key.
+	The private key never leaves the TPM, providing hardware-backed security.`,
+						Value: "TPM_ECCP256_AES256GCM_SHA256",
+					},
+				},
+				Arguments: []cli.Argument{
+					&cli.StringArg{
+						Name: "<sourceFilePath>",
+					},
+					&cli.StringArg{
+						Name: "<destinationFilePath>",
+					},
+				},
+				Action:       handlers.Harden,
 				OnUsageError: bypassDefaultErrorHandling,
 			},
 			{
