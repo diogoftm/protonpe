@@ -127,6 +127,72 @@ func main() {
 				},
 			},
 			{
+				Name:  "card",
+				Usage: "Retrieve card",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "vault",
+						Aliases: []string{"v"},
+						Usage:   "filter by vault name or ID",
+					},
+				},
+				OnUsageError: bypassDefaultErrorHandling,
+				Commands: []*cli.Command{
+					{
+						Name:  "clip",
+						Usage: "copy card information to clipboard",
+						Arguments: []cli.Argument{
+							&cli.StringArg{
+								Name: "<itemId>",
+							},
+						},
+						Flags: []cli.Flag{
+							&cli.BoolFlag{
+								Name:    "csc",
+								Aliases: []string{"c"},
+								Usage:   "copy card security code instead of card number",
+							},
+							&cli.BoolFlag{
+								Name:    "pin",
+								Aliases: []string{"p"},
+								Usage:   "copy PIN code instead of card number",
+							},
+							&cli.IntFlag{
+								Name:    "ttl",
+								Aliases: []string{"l"},
+								Usage:   "clipboard copy time-to-live before deletion",
+							},
+						},
+						Action:       handlers.CardClip,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
+						Name:  "show",
+						Usage: "print card information",
+						Arguments: []cli.Argument{
+							&cli.StringArg{
+								Name: "<itemId>",
+							},
+						},
+						Flags: []cli.Flag{
+							&cli.BoolFlag{
+								Name:    "dump",
+								Aliases: []string{"d"},
+								Usage:   "show all content related to this card",
+							},
+						},
+						Action:       handlers.CardShow,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
+						Name:         "list",
+						Usage:        "list all notes",
+						Action:       handlers.CardList,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+				},
+			},
+			{
 				Name:  "login",
 				Usage: "Retrieve login",
 				Flags: []cli.Flag{

@@ -13,7 +13,7 @@ import (
 // Commands
 //
 
-// `aliases` command handler
+// `harden` command handler
 func Harden(ctx context.Context, c *cli.Command) error {
 	inFilePath := c.StringArg("<sourceFilePath>")
 	outFilePath := c.StringArg("<destinationFilePath>")
