@@ -46,9 +46,14 @@ type ItemMetadata struct {
 
 // passkeys ignored
 type ItemContent struct {
-	ItemEmail    string   `json:"itemEmail"`
-	Password     string   `json:"password"`
-	Urls         []string `json:"url"`
-	TotpUri      string   `json:"totpUri"`
-	ItemUsername string   `json:"itemUsername"`
+	ItemEmail          string   `json:"itemEmail"`
+	Password           string   `json:"password"`
+	Urls               []string `json:"url"`
+	TotpUri            string   `json:"totpUri"`
+	ItemUsername       string   `json:"itemUsername"`
+	CardholderName     string   `json:"cardholderName"`
+	Number             string   `json:"number"`
+	VerificationNumber string   `json:"verificationNumber"`
+	ExpirationDate     string   `json:"expirationDate"`
+	Pin                string   `json:"pin"`
 }
