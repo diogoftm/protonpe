@@ -27,14 +27,87 @@ func main() {
 		HideHelpCommand: true,
 		Commands: []*cli.Command{
 			{
-				Name:         "info",
-				Usage:        "Show general information about the export file and vaults",
-				Action:       handlers.Info,
+				Name:  "aliases",
+				Usage: "Retrieve all email aliases",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "vault",
+						Aliases: []string{"v"},
+						Usage:   "filter by vault name or ID",
+					},
+				},
+				Action:       handlers.Aliases,
 				OnUsageError: bypassDefaultErrorHandling,
 			},
 			{
+				Name:  "card",
+				Usage: "Retrieve card",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "vault",
+						Aliases: []string{"v"},
+						Usage:   "filter by vault name or ID",
+					},
+				},
+				OnUsageError: bypassDefaultErrorHandling,
+				Commands: []*cli.Command{
+					{
+						Name:  "clip",
+						Usage: "copy card information (card number by default) to clipboard",
+						Arguments: []cli.Argument{
+							&cli.StringArg{
+								Name: "<itemId>",
+							},
+						},
+						Flags: []cli.Flag{
+							&cli.BoolFlag{
+								Name:    "csc",
+								Aliases: []string{"c"},
+								Usage:   "copy card security code",
+							},
+							&cli.BoolFlag{
+								Name:    "pin",
+								Aliases: []string{"p"},
+								Usage:   "copy PIN code",
+							},
+							&cli.IntFlag{
+								Name:    "ttl",
+								Aliases: []string{"l"},
+								Usage:   "clipboard copy time-to-live before deletion",
+							},
+						},
+						Action:       handlers.CardClip,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
+						Name:         "list",
+						Usage:        "list all notes",
+						Action:       handlers.CardList,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
+						Name:  "show",
+						Usage: "print card content",
+						Arguments: []cli.Argument{
+							&cli.StringArg{
+								Name: "<itemId>",
+							},
+						},
+						Flags: []cli.Flag{
+							&cli.BoolFlag{
+								Name:    "dump",
+								Aliases: []string{"d"},
+								Usage:   "show all content related to this card",
+							},
+						},
+						Action:       handlers.CardShow,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+				},
+			},
+			{
 				Name:  "harden",
-				Usage: "Enhance the security of a vault file by encrypting it with a strong method",
+				Usage: "Enhance the security of a vault file by encrypting it again",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:    "encryptionMethod",
@@ -58,8 +131,8 @@ func main() {
 				OnUsageError: bypassDefaultErrorHandling,
 			},
 			{
-				Name:  "aliases",
-				Usage: "Retrieve all email aliases",
+				Name:  "id",
+				Usage: "Retrieve identity",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:    "vault",
@@ -67,8 +140,163 @@ func main() {
 						Usage:   "filter by vault name or ID",
 					},
 				},
-				Action:       handlers.Aliases,
 				OnUsageError: bypassDefaultErrorHandling,
+				Commands: []*cli.Command{
+					{
+						Name:  "clip",
+						Usage: "copy identity information (full name by default) to clipboard",
+						Arguments: []cli.Argument{
+							&cli.StringArg{
+								Name: "<itemId>",
+							},
+						},
+						Flags: []cli.Flag{
+							&cli.BoolFlag{
+								Name:    "address",
+								Aliases: []string{"a"},
+								Usage:   "copy address",
+							},
+							&cli.BoolFlag{
+								Name:    "email",
+								Aliases: []string{"e"},
+								Usage:   "copy email",
+							},
+							&cli.BoolFlag{
+								Name:    "license",
+								Aliases: []string{"li"},
+								Usage:   "copy license number",
+							},
+							&cli.BoolFlag{
+								Name:    "passport",
+								Aliases: []string{"p"},
+								Usage:   "copy passport number",
+							},
+							&cli.BoolFlag{
+								Name:    "phone",
+								Aliases: []string{"p"},
+								Usage:   "copy main phone number",
+							},
+							&cli.BoolFlag{
+								Name:    "ssn",
+								Aliases: []string{"s"},
+								Usage:   "copy social security number",
+							},
+							&cli.IntFlag{
+								Name:    "ttl",
+								Aliases: []string{"l"},
+								Usage:   "clipboard copy time-to-live before deletion",
+							},
+							&cli.BoolFlag{
+								Name:    "workEmail",
+								Aliases: []string{"we"},
+								Usage:   "copy email",
+							},
+							&cli.BoolFlag{
+								Name:    "workPhone",
+								Aliases: []string{"wp"},
+								Usage:   "copy work phone number",
+							},
+						},
+						Action:       handlers.IdClip,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
+						Name:         "list",
+						Usage:        "list all identities",
+						Action:       handlers.IdList,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
+						Name:  "show",
+						Usage: "print identity content",
+						Arguments: []cli.Argument{
+							&cli.StringArg{
+								Name: "<itemId>",
+							},
+						},
+						Flags: []cli.Flag{
+							&cli.BoolFlag{
+								Name:    "dump",
+								Aliases: []string{"d"},
+								Usage:   "show all content related to this identity",
+							},
+						},
+						Action:       handlers.IdShow,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+				},
+			},
+			{
+				Name:         "info",
+				Usage:        "Show general information about the export file and vaults",
+				Action:       handlers.Info,
+				OnUsageError: bypassDefaultErrorHandling,
+			},
+			{
+				Name:  "login",
+				Usage: "Retrieve login",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "vault",
+						Aliases: []string{"v"},
+						Usage:   "filter by vault name or ID",
+					},
+				},
+				OnUsageError: bypassDefaultErrorHandling,
+				Commands: []*cli.Command{
+					{
+						Name:  "clip",
+						Usage: "copy login password (default) or TOTP to clipboard",
+						Arguments: []cli.Argument{
+							&cli.StringArg{
+								Name: "<itemId>",
+							},
+						},
+						Flags: []cli.Flag{
+							&cli.BoolFlag{
+								Name:    "totp",
+								Aliases: []string{"t"},
+								Usage:   "copy TOTP",
+							},
+							&cli.IntFlag{
+								Name:    "ttl",
+								Aliases: []string{"l"},
+								Usage:   "clipboard copy time-to-live before deletion",
+							},
+						},
+						Action:       handlers.LoginClip,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
+						Name:         "list",
+						Usage:        "list all logins",
+						Action:       handlers.LoginList,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
+						Name:  "show",
+						Usage: "print login details or TOTP",
+						Arguments: []cli.Argument{
+							&cli.StringArg{
+								Name: "<itemId>",
+							},
+						},
+						Flags: []cli.Flag{
+							&cli.BoolFlag{
+								Name:    "dump",
+								Aliases: []string{"d"},
+								Usage:   "show all content related to this login",
+							},
+							&cli.BoolFlag{
+								Name:    "totp",
+								Aliases: []string{"t"},
+								Usage:   "show TOTP instead of credentials",
+							},
+						},
+						Action:       handlers.LoginShow,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+				},
 			},
 			{
 				Name:  "note",
@@ -101,6 +329,12 @@ func main() {
 						OnUsageError: bypassDefaultErrorHandling,
 					},
 					{
+						Name:         "list",
+						Usage:        "list all notes",
+						Action:       handlers.NoteList,
+						OnUsageError: bypassDefaultErrorHandling,
+					},
+					{
 						Name:  "show",
 						Usage: "print note content",
 						Arguments: []cli.Argument{
@@ -116,144 +350,6 @@ func main() {
 							},
 						},
 						Action:       handlers.NoteShow,
-						OnUsageError: bypassDefaultErrorHandling,
-					},
-					{
-						Name:         "list",
-						Usage:        "list all notes",
-						Action:       handlers.NoteList,
-						OnUsageError: bypassDefaultErrorHandling,
-					},
-				},
-			},
-			{
-				Name:  "card",
-				Usage: "Retrieve card",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:    "vault",
-						Aliases: []string{"v"},
-						Usage:   "filter by vault name or ID",
-					},
-				},
-				OnUsageError: bypassDefaultErrorHandling,
-				Commands: []*cli.Command{
-					{
-						Name:  "clip",
-						Usage: "copy card information to clipboard",
-						Arguments: []cli.Argument{
-							&cli.StringArg{
-								Name: "<itemId>",
-							},
-						},
-						Flags: []cli.Flag{
-							&cli.BoolFlag{
-								Name:    "csc",
-								Aliases: []string{"c"},
-								Usage:   "copy card security code instead of card number",
-							},
-							&cli.BoolFlag{
-								Name:    "pin",
-								Aliases: []string{"p"},
-								Usage:   "copy PIN code instead of card number",
-							},
-							&cli.IntFlag{
-								Name:    "ttl",
-								Aliases: []string{"l"},
-								Usage:   "clipboard copy time-to-live before deletion",
-							},
-						},
-						Action:       handlers.CardClip,
-						OnUsageError: bypassDefaultErrorHandling,
-					},
-					{
-						Name:  "show",
-						Usage: "print card information",
-						Arguments: []cli.Argument{
-							&cli.StringArg{
-								Name: "<itemId>",
-							},
-						},
-						Flags: []cli.Flag{
-							&cli.BoolFlag{
-								Name:    "dump",
-								Aliases: []string{"d"},
-								Usage:   "show all content related to this card",
-							},
-						},
-						Action:       handlers.CardShow,
-						OnUsageError: bypassDefaultErrorHandling,
-					},
-					{
-						Name:         "list",
-						Usage:        "list all notes",
-						Action:       handlers.CardList,
-						OnUsageError: bypassDefaultErrorHandling,
-					},
-				},
-			},
-			{
-				Name:  "login",
-				Usage: "Retrieve login",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:    "vault",
-						Aliases: []string{"v"},
-						Usage:   "filter by vault name or ID",
-					},
-				},
-				OnUsageError: bypassDefaultErrorHandling,
-				Commands: []*cli.Command{
-					{
-						Name:  "clip",
-						Usage: "copy login password or TOTP to clipboard",
-						Arguments: []cli.Argument{
-							&cli.StringArg{
-								Name: "<itemId>",
-							},
-						},
-						Flags: []cli.Flag{
-							&cli.BoolFlag{
-								Name:    "totp",
-								Aliases: []string{"t"},
-								Usage:   "copy TOTP instead of password",
-							},
-							&cli.IntFlag{
-								Name:    "ttl",
-								Aliases: []string{"l"},
-								Usage:   "clipboard copy time-to-live before deletion",
-							},
-						},
-						Action:       handlers.LoginClip,
-						OnUsageError: bypassDefaultErrorHandling,
-					},
-					{
-						Name:  "show",
-						Usage: "print login details or TOTP",
-						Arguments: []cli.Argument{
-							&cli.StringArg{
-								Name: "<itemId>",
-							},
-						},
-						Flags: []cli.Flag{
-							&cli.BoolFlag{
-								Name:    "totp",
-								Aliases: []string{"t"},
-								Usage:   "show TOTP instead of credentials",
-							},
-							&cli.BoolFlag{
-								Name:    "dump",
-								Aliases: []string{"d"},
-								Usage:   "show all content related to this login",
-							},
-						},
-						Action:       handlers.LoginShow,
-						OnUsageError: bypassDefaultErrorHandling,
-					},
-					{
-						Name:         "list",
-						Usage:        "list all logins",
-						Action:       handlers.LoginList,
 						OnUsageError: bypassDefaultErrorHandling,
 					},
 				},

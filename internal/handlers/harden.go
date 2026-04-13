@@ -37,7 +37,7 @@ func Harden(ctx context.Context, c *cli.Command) error {
 
 // Print encryption success info
 func printHarden(inFilePath string, outFilePath string) error {
-	_, err := fmt.Printf("✓ Encrypted '%s' → '%s'\n", inFilePath, outFilePath)
+	_, err := fmt.Printf("✓ Encrypted '%s' → '%s'\nThis file can only be decrypted in this machine.\n", inFilePath, outFilePath)
 
 	return err
 }
