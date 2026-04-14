@@ -15,8 +15,8 @@ require (
 require (
 	github.com/boombuler/barcode v1.1.0 // indirect
 	github.com/cloudflare/circl v1.6.3 // indirect
-	golang.org/x/exp/shiny v0.0.0-20260312153236-7ab1446f8b90 // indirect
+	golang.org/x/exp/shiny v0.0.0-20260410095643-746e56fc9e2f // indirect
 	golang.org/x/image v0.39.0 // indirect
-	golang.org/x/mobile v0.0.0-20260312152759-81488f6aeb60 // indirect
+	golang.org/x/mobile v0.0.0-20260410095206-2cfb76559b7b // indirect
 	golang.org/x/sys v0.43.0 // indirect
 )

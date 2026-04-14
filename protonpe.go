@@ -14,22 +14,20 @@ import (
 func main() {
 
 	cmd := &cli.Command{
-		Name:    "protonpe",
-		Usage:   "read secrets from Proton Pass exports",
-		Version: "v0.2.0-beta",
-		Flags: []cli.Flag{
-			&cli.StringFlag{
-				Name:    "file",
-				Aliases: []string{"f"},
-				Usage:   "path to Proton Pass export",
-			},
-		},
+		Name:            "protonpe",
+		Usage:           "read secrets from Proton Pass exports",
+		Version:         "v0.2.0",
 		HideHelpCommand: true,
 		Commands: []*cli.Command{
 			{
 				Name:  "aliases",
 				Usage: "Retrieve all email aliases",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "file",
+						Aliases: []string{"f"},
+						Usage:   "path to Proton Pass export",
+					},
 					&cli.StringFlag{
 						Name:    "vault",
 						Aliases: []string{"v"},
@@ -43,6 +41,11 @@ func main() {
 				Name:  "card",
 				Usage: "Retrieve card",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "file",
+						Aliases: []string{"f"},
+						Usage:   "path to Proton Pass export",
+					},
 					&cli.StringFlag{
 						Name:    "vault",
 						Aliases: []string{"v"},
@@ -107,16 +110,21 @@ func main() {
 			},
 			{
 				Name:  "harden",
-				Usage: "Enhance the security of a vault file by encrypting it again",
+				Usage: "Enhance the security of a vault file by encrypting it again using a different method",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:    "encryptionMethod",
 						Aliases: []string{"e"},
-						Usage: `Specify the encryption method to use. Supported options:
+						Usage: `Encryption method to use. Supported options:
 - TPM_ECCP256_AES256GCM_SHA256
 	Encrypts the file with AES-256-GCM and protects the encryption keys using the TPM's ECC P-256 key.
 	The private key never leaves the TPM, providing hardware-backed security.`,
 						Value: "TPM_ECCP256_AES256GCM_SHA256",
+					},
+					&cli.StringFlag{
+						Name:    "file",
+						Aliases: []string{"f"},
+						Usage:   "path to Proton Pass export",
 					},
 				},
 				Arguments: []cli.Argument{
@@ -134,6 +142,11 @@ func main() {
 				Name:  "id",
 				Usage: "Retrieve identity",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "file",
+						Aliases: []string{"f"},
+						Usage:   "path to Proton Pass export",
+					},
 					&cli.StringFlag{
 						Name:    "vault",
 						Aliases: []string{"v"},
@@ -227,8 +240,15 @@ func main() {
 				},
 			},
 			{
-				Name:         "info",
-				Usage:        "Show general information about the export file and vaults",
+				Name:  "info",
+				Usage: "Show general information about the export file and vaults",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "file",
+						Aliases: []string{"f"},
+						Usage:   "path to Proton Pass export",
+					},
+				},
 				Action:       handlers.Info,
 				OnUsageError: bypassDefaultErrorHandling,
 			},
@@ -236,6 +256,11 @@ func main() {
 				Name:  "login",
 				Usage: "Retrieve login",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "file",
+						Aliases: []string{"f"},
+						Usage:   "path to Proton Pass export",
+					},
 					&cli.StringFlag{
 						Name:    "vault",
 						Aliases: []string{"v"},
@@ -302,6 +327,11 @@ func main() {
 				Name:  "note",
 				Usage: "Retrieve note",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "file",
+						Aliases: []string{"f"},
+						Usage:   "path to Proton Pass export",
+					},
 					&cli.StringFlag{
 						Name:    "vault",
 						Aliases: []string{"v"},
